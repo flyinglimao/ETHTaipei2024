@@ -48,10 +48,9 @@ function Step({ state, text }: { state: number; text: string }) {
 
 function Create() {
   const formRef = useRef<HTMLFormElement>(null);
-  console.log(formRef.current);
   const [step, setStep] = useState(0);
   const [metadataUrl, setMetadataUrl] = useState<`ipfs://${string}`>(
-    "ipfs://QmXJro1tr2oNu3QP5z7DhGFahjDQjiManHX1LrqAu95ycM"
+    "ipfs://QmPr1DyrPda4cPp3fj17HH9PtwfTkv95EQDUSRUGoX3hWJ"
   );
   const upload = useCallback(async (evt: FormEvent) => {
     evt.preventDefault();
@@ -118,7 +117,7 @@ function Create() {
           "flex-1 flex flex-col gap-4"
         )}
       >
-        <Finish story={1} />
+        <Finish />
       </div>
     </form>
   );

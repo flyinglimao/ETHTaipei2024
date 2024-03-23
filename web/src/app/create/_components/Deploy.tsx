@@ -27,7 +27,7 @@ export function Deploy({
     hash,
   });
 
-  const token = useMemo(() => {
+  const getToken = useCallback(() => {
     if (!formElement.current) return;
 
     const formData = new FormData(formElement.current);
@@ -35,9 +35,10 @@ export function Deploy({
       .network("sepolia")
       .withAccount(account) as ReturnType<typeof mintclub.network>;
     return mintClubClient.nft(formData.get("symbol") as string);
-  }, []);
+  }, [account]);
 
   const deploy = useCallback(async () => {
+    const token = getToken();
     if (!token || tokenExists || !formElement.current) return;
     const exist = await token.exists();
     if (exist) {
@@ -47,11 +48,19 @@ export function Deploy({
 
     const formData = new FormData(formElement.current);
     const supply = parseInt(formData.get("supply") as string) || 10_000_000;
+    console.log({
+      curveType: "LINEAR",
+      stepCount: 10,
+      maxSupply: supply,
+      initialMintingPrice: parseFloat(formData.get("minPrice") as string) || 0,
+      finalMintingPrice: parseFloat(formData.get("maxPrice") as string) || 1000,
+      creatorAllocation: supply * 0.3,
+    });
     await token.create({
       name: formData.get("title") as string,
       reserveToken: {
         address: process.env.NEXT_PUBLIC_USDC_ADDRESS as `0x${string}`,
-        decimals: 18,
+        decimals: 6,
       },
       curveData: {
         curveType: "LINEAR",
@@ -70,6 +79,7 @@ export function Deploy({
   }, [tokenExists, metadataUrl]);
 
   const approve = useCallback(async () => {
+    const token = getToken();
     if (!token || tokenApproved || !account.address) return;
     const approve = await token.getIsApprovedForAll({
       owner: account.address,
@@ -89,6 +99,7 @@ export function Deploy({
   }, [tokenApproved, account]);
 
   const startIso = useCallback(async () => {
+    const token = getToken();
     if (!token || !account.address || !formElement.current) return;
 
     const formData = new FormData(formElement.current);
@@ -128,6 +139,7 @@ export function Deploy({
             className="rounded-full bg-slate-50 px-4 py-1.5"
             onClick={deploy}
             disabled={tokenExists}
+            type="button"
           >
             {tokenExists ? "Deployed" : "Deploy"}
           </button>
@@ -138,6 +150,7 @@ export function Deploy({
             className="rounded-full bg-slate-50 px-4 py-1.5"
             onClick={approve}
             disabled={tokenApproved}
+            type="button"
           >
             {tokenApproved ? "Approved" : "Approve"}
           </button>
@@ -147,6 +160,7 @@ export function Deploy({
           <button
             className="rounded-full bg-slate-50 px-4 py-1.5"
             onClick={startIso}
+            type="button"
           >
             Start
           </button>

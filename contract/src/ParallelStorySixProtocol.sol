@@ -107,6 +107,7 @@ contract ParallelStorySixProtocol is
         userVoted.push();
         proposeToAddress.push();
         storyIdToPhase.push(Phase.Iso);
+        storyIdToPhaseLength.push(0);
         storyIdToEndTime.push();
         storyIdToEndTime[storyId] = block.timestamp + duration;
         isoAmount.push(amount);

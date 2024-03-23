@@ -22,7 +22,7 @@ export function NavEntry({ storyId }: { storyId: number }) {
       <Image
         src={
           info?.image ||
-          "https://cf-ipfs.com/ipfs/QmbkcBktXQJEA4K5Lk1MCU5STZLjDvXPaYrGZT9tMayaBg"
+          "https://cf-ipfs.com/ipfs/QmPr1DyrPda4cPp3fj17HH9PtwfTkv95EQDUSRUGoX3hWJ"
         }
         width={160}
         height={160}

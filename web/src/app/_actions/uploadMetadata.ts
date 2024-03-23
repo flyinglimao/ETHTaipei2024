@@ -13,7 +13,7 @@ export async function uploadMetadata(formData: FormData) {
         filebaseApiKey: process.env.FILEBASE_KEY || "",
         media: formData.get("avatar") as File,
       })) as `ipfs://${string}`)
-    : "ipfs://QmNSEdQrAU3G9DkNWUaE7rDMmsr3pdF8tgqAuuAPtcKKrY";
+    : "ipfs://QmPr1DyrPda4cPp3fj17HH9PtwfTkv95EQDUSRUGoX3hWJ";
 
   return await mintclub.ipfs.uploadMetadata({
     filebaseApiKey: process.env.FILEBASE_KEY || "",
