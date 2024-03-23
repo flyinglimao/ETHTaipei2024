@@ -283,7 +283,27 @@ contract ParallelStorySixProtocol is
         return storyIdToToken[storyId].symbol();
     }
 
-    function story(uint256 storyId) external view returns (string memory) {}
+    function story(
+        uint256 storyId
+    ) external view returns (string memory result) {
+        string[] memory paragraphs = storyIdToParagraphs[storyId];
+        for (uint256 i = 0; i < paragraphs.length; i++) {
+            result = string(abi.encodePacked(result, paragraphs[i], "\n\n"));
+        }
+    }
+
+    function totalStory() external view returns (uint256) {
+        return storyIdToToken.length;
+    }
+
+    function currentProposes(
+        uint256 storyId
+    ) external view returns (uint256, string[] memory) {
+        require(storyIdToPhase[storyId] == Phase.Propose, "not propose phase");
+
+        uint256 paragraphId = _currentParagraphSlot(storyId);
+        return (paragraphId, storyIdToParagraphProposes[storyId][paragraphId]);
+    }
 
     // return the deciding paragraph slot id
     function _currentParagraphSlot(
