@@ -26,7 +26,7 @@ export function Layout({ children }: { children: ReactNode }) {
               href={`/${story}`}
               key={`story-link-${story}`}
               className={clsx(
-                "rounded-full size-8 border grid place-items-center hover:border-slate-800",
+                "rounded-full size-8 border grid place-items-center hover:border-slate-800 transition-all",
                 pathname === `/${story}` ? "border-slate-400" : ""
               )}
             >
@@ -36,7 +36,7 @@ export function Layout({ children }: { children: ReactNode }) {
           <Link
             href={`/create`}
             className={clsx(
-              "rounded-full size-8 border grid place-items-center hover:border-slate-800 mt-4",
+              "rounded-full size-8 border grid place-items-center hover:border-slate-800 mt-4 transition-all",
               pathname === `/create` ? "border-slate-400" : ""
             )}
           >
