@@ -13,6 +13,7 @@ function Story() {
     Number(params.story as string) - 1
   ] as Stage;
   const end = new Date(2024, 2, 25);
+  const symbol = "KUSNOW";
 
   return (
     <div className="w-full max-w-screen-lg mx-auto flex flex-wrap gap-12 my-8 items-start">
@@ -35,7 +36,9 @@ function Story() {
           Join
         </button>
         <Link
-          href={`/${params.story}/trade`}
+          href={`https://mint.club/nft/sepolia/${symbol}`}
+          target="_blank"
+          referrerPolicy="no-referrer"
           className="rounded-full border w-full py-2 hover:border-slate-800 transition-all text-center"
         >
           Trade
@@ -67,7 +70,9 @@ function Story() {
               tokens to vote for the development of the story.
             </p>
             <Link
-              href={`/${params.story}/trade`}
+              href={`https://mint.club/nft/sepolia/${symbol}`}
+              target="_blank"
+              referrerPolicy="no-referrer"
               className="rounded-full border w-full py-2 hover:border-slate-800 transition-all text-center"
             >
               Trade
