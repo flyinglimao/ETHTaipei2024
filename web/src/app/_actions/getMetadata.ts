@@ -48,5 +48,6 @@ export async function getMetadata(storyId: number) {
     image,
     name: metadata.name,
     holders,
+    symbol,
   };
 }

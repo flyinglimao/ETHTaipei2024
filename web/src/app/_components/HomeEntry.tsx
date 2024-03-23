@@ -34,7 +34,6 @@ export function HomeEntry({ storyId }: { storyId: number }) {
           <button
             className="rounded-full border w-32 py-2 hover:border-slate-800 transition-all"
             onClick={(e) => {
-              e.preventDefault();
               setStories((stories) => {
                 if (stories.includes(storyId)) {
                   return stories.filter((s) => s !== storyId);
@@ -42,6 +41,7 @@ export function HomeEntry({ storyId }: { storyId: number }) {
                 return stories.concat(storyId);
               });
             }}
+            type="button"
           >
             {stories.includes(storyId) ? "Leave" : "Join"}
           </button>

@@ -4,39 +4,61 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Countdown } from "../_components/Countdown";
+import { useMetadata } from "../_hooks/useMetadata";
+import { useLocalStorage } from "usehooks-ts";
 
 type Stage = "iso" | "propose" | "vote" | "end";
 
 function Story() {
+  const [stories, setStories] = useLocalStorage<number[]>("stories", []);
   const params = useParams();
+  const storyId = Number(params.story as string);
   const stage: Stage = ["iso", "propose", "vote", "end"][
     Number(params.story as string) - 1
   ] as Stage;
   const end = new Date(2024, 2, 25);
-  const symbol = "KUSNOW";
+  const info = useMetadata(storyId);
+
+  if (!info) {
+    return (
+      <div className="w-full max-w-screen-lg mx-auto flex flex-wrap gap-12 my-8 items-start">
+        <span>Loading...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-screen-lg mx-auto flex flex-wrap gap-12 my-8 items-start">
       <div className="rounded-xl border p-8 flex flex-col min-w-60 gap-4">
         <Image
-          src="https://cf-ipfs.com/ipfs/QmbkcBktXQJEA4K5Lk1MCU5STZLjDvXPaYrGZT9tMayaBg"
+          src={info.image}
           width={160}
           height={160}
-          alt="Image"
+          alt={info.name}
           className="rounded-full overflow-hidden object-cover object-center size-12"
         />
-        <span className="text-lg font-bold">Love Story</span>
-        <span className="text-slate-400">6K Writers</span>
+        <span className="text-lg font-bold">{info.name}</span>
+        <span className="text-slate-400">
+          {Intl.NumberFormat("en-US", {
+            notation: "compact",
+            maximumFractionDigits: 1,
+          }).format(info.holders || 0) + " Writers"}
+        </span>
         <button
           className="rounded-full border w-full py-2 hover:border-slate-800 transition-all"
           onClick={(e) => {
-            e.preventDefault();
+            setStories((stories) => {
+              if (stories.includes(storyId)) {
+                return stories.filter((s) => s !== storyId);
+              }
+              return stories.concat(storyId);
+            });
           }}
         >
-          Join
+          {stories.includes(storyId) ? "Leave" : "Join"}
         </button>
         <Link
-          href={`https://mint.club/nft/sepolia/${symbol}`}
+          href={`https://mint.club/nft/sepolia/${info.symbol}`}
           target="_blank"
           referrerPolicy="no-referrer"
           className="rounded-full border w-full py-2 hover:border-slate-800 transition-all text-center"
@@ -70,7 +92,7 @@ function Story() {
               tokens to vote for the development of the story.
             </p>
             <Link
-              href={`https://mint.club/nft/sepolia/${symbol}`}
+              href={`https://mint.club/nft/sepolia/${info.symbol}`}
               target="_blank"
               referrerPolicy="no-referrer"
               className="rounded-full border w-full py-2 hover:border-slate-800 transition-all text-center"
