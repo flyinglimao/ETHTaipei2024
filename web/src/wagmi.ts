@@ -9,7 +9,7 @@ export const config = createConfig(
     transports: {
       // RPC URL for each chain
       [sepolia.id]: http(
-        `https://eth-sepolia.g.alchemy.com/v2/KVyGeNv6ldkYaUxi-I2JmJLjKAKtDxMw}`
+        `https://eth-sepolia.g.alchemy.com/v2/KVyGeNv6ldkYaUxi-I2JmJLjKAKtDxMw`
       ),
     },
 
