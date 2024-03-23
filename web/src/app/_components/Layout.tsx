@@ -27,7 +27,7 @@ export function Layout({ children }: { children: ReactNode }) {
               key={`story-link-${story}`}
               className={clsx(
                 "rounded-full size-8 border grid place-items-center hover:border-slate-800 transition-all",
-                pathname === `/${story}` ? "border-slate-400" : ""
+                pathname.match(RegExp(`^/${story}`)) ? "border-slate-400" : ""
               )}
             >
               {story}
@@ -45,8 +45,10 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
       </div>
       <div className="grow shrink-0 relative min-w-0">
-        <div className="sticky top-0 w-full flex items-center justify-between px-4 h-16 border-b">
-          <h1 className="text-xl font-bold">Parallel Story Six</h1>
+        <div className="sticky top-0 w-full flex items-center justify-between px-4 h-16 border-b z-40 bg-white">
+          <Link href="/">
+            <h1 className="text-xl font-bold">Parallel Story Six</h1>{" "}
+          </Link>
           <div className="flex gap-4">
             <ConnectKitButton />
           </div>
