@@ -57,7 +57,11 @@ function App() {
           />
         </form>
         <span className="text-slate-400">
-          {Number(totalStoryResult.data)} Stoires
+          {Intl.NumberFormat("en-US", {
+            notation: "compact",
+            maximumFractionDigits: 1,
+          }).format(Number(totalStoryResult.data))}{" "}
+          Stoires
         </span>
       </div>
       <div className="flex flex-wrap justify-between gap-8 items-stretch">
