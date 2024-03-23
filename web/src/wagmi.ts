@@ -1,23 +1,34 @@
-import { http, createConfig } from 'wagmi'
-import { mainnet, sepolia } from 'wagmi/chains'
-import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors'
+import { getDefaultConfig } from "connectkit";
+import { createConfig, http } from "wagmi";
+import { sepolia } from "wagmi/chains";
 
-export const config = createConfig({
-  chains: [mainnet, sepolia],
-  connectors: [
-    injected(),
-    coinbaseWallet({ appName: 'Create Wagmi' }),
-    walletConnect({ projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID }),
-  ],
-  ssr: true,
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-})
+export const config = createConfig(
+  getDefaultConfig({
+    // Your dApps chains
+    chains: [sepolia],
+    transports: {
+      // RPC URL for each chain
+      [sepolia.id]: http(
+        `https://eth-sepolia.g.alchemy.com/v2/KVyGeNv6ldkYaUxi-I2JmJLjKAKtDxMw}`
+      ),
+    },
 
-declare module 'wagmi' {
+    // Required API Keys
+    walletConnectProjectId:
+      process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "",
+
+    // Required App Info
+    appName: "Parallel Story Six",
+
+    // Optional App Info
+    appDescription: "Next Generation Story Protocol",
+    appUrl: "https://ps6.limaois.me", // your app's url
+    appIcon: "https://ps6.limaois.me/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
+  })
+);
+
+declare module "wagmi" {
   interface Register {
-    config: typeof config
+    config: typeof config;
   }
 }
