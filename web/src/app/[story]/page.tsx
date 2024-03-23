@@ -16,7 +16,7 @@ function Story() {
 
   return (
     <div className="w-full max-w-screen-lg mx-auto flex flex-wrap gap-12 my-8 items-start">
-      <div className="rounded-xl border p-8 flex flex-col w-60 gap-4">
+      <div className="rounded-xl border p-8 flex flex-col min-w-60 gap-4">
         <Image
           src="https://scarlet-famous-crayfish-103.mypinata.cloud/ipfs/QmbkcBktXQJEA4K5Lk1MCU5STZLjDvXPaYrGZT9tMayaBg"
           width={160}
@@ -41,7 +41,7 @@ function Story() {
           Trade
         </Link>
       </div>
-      <div className="flex-1 flex flex-col gap-6">
+      <div className="flex-1 min-w-60 flex flex-col gap-6">
         <h2 className="font-bold text-3xl">Story</h2>
         <article className="flex flex-col gap-4">
           <p>
