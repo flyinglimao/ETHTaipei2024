@@ -23,6 +23,8 @@ contract ParallelStorySixProtocol is
         Finish
     }
 
+    uint256 constant MAX_GAS_LIMIT = 500000;
+
     IERC20 public immutable usdc;
     IERC20 public immutable weth;
     IDysonPair public immutable usdcEthPair;
@@ -123,7 +125,7 @@ contract ParallelStorySixProtocol is
             address(storyIdToToken[storyId]),
             isoAmount[storyId],
             0, // TODO: safe amount
-            msg.sender
+            address(this)
         );
         usdc.approve(address(usdcEthPair), val);
         storyIdToDysonNote[storyId] = usdcEthPair.deposit1(
@@ -225,11 +227,13 @@ contract ParallelStorySixProtocol is
         string memory selectedParagraph = storyIdToParagraphProposes[storyId][
             paragraphId
         ][selectedParagraphId];
-        uint256 requestId = aiOracle.requestCallback(
+        uint256 requestId = aiOracle.requestCallback{
+            value: aiOracle.estimateFee(11, MAX_GAS_LIMIT)
+        }(
             11,
             bytes(selectedParagraph),
             address(this),
-            0, // TODO
+            uint64(MAX_GAS_LIMIT),
             abi.encode(storyId)
         );
         requestIdToStoryId[requestId] = storyId;

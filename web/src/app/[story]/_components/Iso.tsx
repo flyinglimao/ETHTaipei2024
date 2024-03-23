@@ -18,7 +18,7 @@ function FinishIso({ storyId }: { storyId: number }) {
       functionName: "finishIso",
       args: [BigInt(storyId), 86400n],
     });
-  }, [storyId]);
+  }, [storyId, writeContract]);
 
   return (
     <section className="rounded-xl border p-6 flex flex-col gap-4">

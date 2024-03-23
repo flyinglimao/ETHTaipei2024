@@ -48,14 +48,6 @@ export function Deploy({
 
     const formData = new FormData(formElement.current);
     const supply = parseInt(formData.get("supply") as string) || 10_000_000;
-    console.log({
-      curveType: "LINEAR",
-      stepCount: 10,
-      maxSupply: supply,
-      initialMintingPrice: parseFloat(formData.get("minPrice") as string) || 0,
-      finalMintingPrice: parseFloat(formData.get("maxPrice") as string) || 1000,
-      creatorAllocation: supply * 0.3,
-    });
     await token.create({
       name: formData.get("title") as string,
       reserveToken: {
@@ -111,7 +103,7 @@ export function Deploy({
       functionName: "startIso",
       args: [token.getTokenAddress(), BigInt(supply * 0.3), 600n],
     });
-  }, []);
+  }, [writeContract]);
 
   useEffect(() => {
     if (isSuccess) {
