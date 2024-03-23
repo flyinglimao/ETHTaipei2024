@@ -318,7 +318,6 @@ contract ParallelStorySixProtocol is
     }
 
     function _createNewParagraphSlot(uint256 storyId) internal {
-        storyIdToParagraphs[storyId].push();
         storyIdToParagraphProposes[storyId].push();
         userVoted[storyId].push();
         proposeToAddress[storyId].push();

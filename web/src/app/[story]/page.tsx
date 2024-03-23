@@ -105,7 +105,9 @@ function Story() {
         {phase === Phase.Iso ? (
           <Iso info={info} end={end} storyId={storyId} />
         ) : null}
-        {phase === Phase.Propose ? <Propose end={end} /> : null}
+        {phase === Phase.Propose ? (
+          <Propose end={end} storyId={storyId} />
+        ) : null}
         {phase === Phase.Vote ? <Vote end={end} /> : null}
         {phase === Phase.Execute ? <Vote end={end} /> : null}
       </div>

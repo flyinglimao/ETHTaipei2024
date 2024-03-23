@@ -101,7 +101,7 @@ export function Deploy({
       address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string}`,
       abi,
       functionName: "startIso",
-      args: [token.getTokenAddress(), BigInt(supply * 0.3), 600n],
+      args: [token.getTokenAddress(), BigInt(supply * 0.3), 180n],
     });
   }, [writeContract]);
 
