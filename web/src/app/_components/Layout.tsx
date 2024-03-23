@@ -30,7 +30,13 @@ export function Layout({ children }: { children: ReactNode }) {
                 pathname.match(RegExp(`^/${story}`)) ? "border-slate-400" : ""
               )}
             >
-              {story}
+              <Image
+                src="https://scarlet-famous-crayfish-103.mypinata.cloud/ipfs/QmbkcBktXQJEA4K5Lk1MCU5STZLjDvXPaYrGZT9tMayaBg"
+                width={160}
+                height={160}
+                alt="Image"
+                className="rounded-full overflow-hidden object-cover object-center size-full"
+              />
             </Link>
           ))}
           <Link
@@ -47,7 +53,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <div className="grow shrink-0 relative min-w-0">
         <div className="sticky top-0 w-full flex items-center justify-between px-4 h-16 border-b z-40 bg-white">
           <Link href="/">
-            <h1 className="text-xl font-bold">Parallel Story Six</h1>{" "}
+            <h1 className="text-xl font-bold">Parallel Story Six</h1>
           </Link>
           <div className="flex gap-4">
             <ConnectKitButton />
