@@ -23,7 +23,7 @@ export const config = createConfig(
     // Optional App Info
     appDescription: "Next Generation Story Protocol",
     appUrl: "https://ps6.limaois.me", // your app's url
-    appIcon: "https://ps6.limaois.me/logo.png", // your app's icon, no bigger than 1024x1024px (max. 1MB)
+    appIcon: "https://ps6.limaois.me/logo.svg", // your app's icon, no bigger than 1024x1024px (max. 1MB)
   })
 );
 
