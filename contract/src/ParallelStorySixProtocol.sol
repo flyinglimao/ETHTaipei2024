@@ -6,8 +6,8 @@ import {ERC1155Holder} from "@openzeppelin/contracts/token/ERC1155/utils/ERC1155
 import {IERC1155Symbol} from "./interfaces/IERC1155Symbol.sol";
 import {IAIOracle} from "./interfaces/IAIOracle.sol";
 import {IMintClubBondV2} from "./interfaces/IMintClubBondV2.sol";
-import {AIOracleCallbackReceiver} from "./lib/AIOracleCallbackReceiver.sol";
 import {IDysonPair} from "./interfaces/IDysonPair.sol";
+import {AIOracleCallbackReceiver} from "./lib/AIOracleCallbackReceiver.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ParallelStorySixProtocol is
