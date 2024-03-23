@@ -3,7 +3,7 @@
 import abi from "@/app/abi";
 import Link from "next/link";
 import { useReadContract } from "wagmi";
-import { EntryCard } from "./_components/EntryCard";
+import { HomeEntry } from "./_components/HomeEntry";
 
 function App() {
   const totalStoryResult = useReadContract({
@@ -64,7 +64,7 @@ function App() {
         {Array(totalStory)
           .fill(0)
           .map((_, i) => (
-            <EntryCard key={`story-${i}`} storyId={i} />
+            <HomeEntry key={`story-${i}`} storyId={i} />
           ))}
       </div>
     </div>

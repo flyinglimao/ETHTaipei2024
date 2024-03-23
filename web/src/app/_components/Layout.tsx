@@ -8,9 +8,10 @@ import { useLocalStorage } from "usehooks-ts";
 import { ConnectKitButton } from "connectkit";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { NavEntry } from "./NavEntry";
 
 export function Layout({ children }: { children: ReactNode }) {
-  const [stories] = useLocalStorage<number[]>("stories", [1]);
+  const [stories] = useLocalStorage<number[]>("stories", []);
   const pathname = usePathname();
 
   return (
@@ -22,22 +23,7 @@ export function Layout({ children }: { children: ReactNode }) {
           </Link>
           <div className="w-full border-b"></div>
           {stories.map((story) => (
-            <Link
-              href={`/${story}`}
-              key={`story-link-${story}`}
-              className={clsx(
-                "rounded-full size-8 border grid place-items-center hover:border-slate-800 transition-all",
-                pathname.match(RegExp(`^/${story}`)) ? "border-slate-400" : ""
-              )}
-            >
-              <Image
-                src="https://cf-ipfs.com/ipfs/QmbkcBktXQJEA4K5Lk1MCU5STZLjDvXPaYrGZT9tMayaBg"
-                width={160}
-                height={160}
-                alt="Image"
-                className="rounded-full overflow-hidden object-cover object-center size-full"
-              />
-            </Link>
+            <NavEntry storyId={story} key={`story-link-${story}`} />
           ))}
           <Link
             href={`/create`}

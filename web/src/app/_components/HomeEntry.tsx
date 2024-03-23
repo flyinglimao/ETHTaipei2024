@@ -1,21 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import { use, useEffect, useState } from "react";
-import { getHolders } from "../_actions/getHolders";
-import abi from "@/app/abi";
-import { useReadContract } from "wagmi";
-import { mintclub } from "mint.club-v2-sdk";
-import { getMetadata } from "../_actions/getMetadata";
+import Link from "next/link";
+import { useLocalStorage } from "usehooks-ts";
+import { useMetadata } from "@/app/_hooks/useMetadata";
 
-export function EntryCard({ storyId }: { storyId: number }) {
-  const [info, setInfo] = useState<Awaited<
-    ReturnType<typeof getMetadata>
-  > | null>(null);
-  useEffect(() => {
-    getMetadata(storyId).then(setInfo);
-  }, [storyId]);
+export function HomeEntry({ storyId }: { storyId: number }) {
+  const [stories, setStories] = useLocalStorage<number[]>("stories", []);
+  const info = useMetadata(storyId);
 
   return (
     <Link href={`/${storyId}`}>
@@ -43,9 +35,15 @@ export function EntryCard({ storyId }: { storyId: number }) {
             className="rounded-full border w-32 py-2 hover:border-slate-800 transition-all"
             onClick={(e) => {
               e.preventDefault();
+              setStories((stories) => {
+                if (stories.includes(storyId)) {
+                  return stories.filter((s) => s !== storyId);
+                }
+                return stories.concat(storyId);
+              });
             }}
           >
-            Join
+            {stories.includes(storyId) ? "Leave" : "Join"}
           </button>
         </div>
       )}
