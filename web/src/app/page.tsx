@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useReadContract } from "wagmi";
-import abi from "./abi";
+import abi from "@/app/abi";
 
 function App() {
   const totalStoryResult = useReadContract({
