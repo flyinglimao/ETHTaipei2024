@@ -31,7 +31,7 @@ export function Layout({ children }: { children: ReactNode }) {
               )}
             >
               <Image
-                src="https://scarlet-famous-crayfish-103.mypinata.cloud/ipfs/QmbkcBktXQJEA4K5Lk1MCU5STZLjDvXPaYrGZT9tMayaBg"
+                src="https://cf-ipfs.com/ipfs/QmbkcBktXQJEA4K5Lk1MCU5STZLjDvXPaYrGZT9tMayaBg"
                 width={160}
                 height={160}
                 alt="Image"

@@ -7,8 +7,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: process.env.PINATA_GATEWAY.split(":")[0],
-        hostname: process.env.PINATA_GATEWAY.split("://")[1],
+        protocol: "https",
+        hostname: "cf-ipfs.com",
       },
     ],
   },

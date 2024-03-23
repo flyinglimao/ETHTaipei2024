@@ -19,7 +19,7 @@ function Story() {
     <div className="w-full max-w-screen-lg mx-auto flex flex-wrap gap-12 my-8 items-start">
       <div className="rounded-xl border p-8 flex flex-col min-w-60 gap-4">
         <Image
-          src="https://scarlet-famous-crayfish-103.mypinata.cloud/ipfs/QmbkcBktXQJEA4K5Lk1MCU5STZLjDvXPaYrGZT9tMayaBg"
+          src="https://cf-ipfs.com/ipfs/QmbkcBktXQJEA4K5Lk1MCU5STZLjDvXPaYrGZT9tMayaBg"
           width={160}
           height={160}
           alt="Image"
