@@ -127,15 +127,18 @@ contract ParallelStorySixProtocol is
             0, // TODO: safe amount
             address(this)
         );
-        usdc.approve(address(usdcEthPair), val);
-        storyIdToDysonNote[storyId] = usdcEthPair.deposit1(
-            address(this),
-            val,
-            0,
-            1 days
-        );
-        storyIdToPhaseLength[storyId] = duration;
 
+        if (val != 0) {
+            usdc.approve(address(usdcEthPair), val);
+            storyIdToDysonNote[storyId] = usdcEthPair.deposit1(
+                address(this),
+                val,
+                0,
+                1 days
+            );
+        }
+
+        storyIdToPhaseLength[storyId] = duration;
         _toProposePhase(storyId);
     }
 
@@ -171,10 +174,9 @@ contract ParallelStorySixProtocol is
 
     function propose(uint256 storyId, string memory paragraph) external {
         require(storyIdToPhase[storyId] == Phase.Propose, "not propose phase");
+        require(block.timestamp < storyIdToEndTime[storyId], "finished");
         uint256 paragraphId = storyIdToParagraphs[storyId].length;
         storyIdToParagraphProposes[storyId][paragraphId].push(paragraph);
-        userVoted[storyId].push();
-        proposeToAddress[storyId].push();
     }
 
     function endPropose(uint256 storyId) external {
@@ -189,7 +191,7 @@ contract ParallelStorySixProtocol is
 
     function vote(uint256 storyId, uint256 proposeId) external {
         require(storyIdToPhase[storyId] == Phase.Vote, "not vote phase");
-        require(storyIdToEndTime[storyId] < block.timestamp, "not finished");
+        require(block.timestamp < storyIdToEndTime[storyId], "finished");
 
         uint256 paragraphId = storyIdToParagraphs[storyId].length;
         require(!userVoted[storyId][paragraphId][msg.sender], "voted");
@@ -282,6 +284,32 @@ contract ParallelStorySixProtocol is
         );
     }
 
+    struct Story {
+        string[] paragraphs;
+        string[] paragraphProposes;
+        Phase phase;
+        uint256 endTime;
+        uint256 phaseLength;
+    }
+
+    function setStory(uint256 storyId, Story memory story_) external {
+        storyIdToPhaseLength[storyId] = story_.phaseLength;
+
+        for (uint256 i = 0; i < story_.paragraphs.length; i++) {
+            storyIdToParagraphs[storyId].push(story_.paragraphs[i]);
+            _toProposePhase(storyId);
+        }
+        uint256 paragraphId = storyIdToParagraphs[storyId].length;
+        for (uint256 i = 0; i < story_.paragraphProposes.length; i++) {
+            storyIdToParagraphProposes[storyId][paragraphId].push(
+                story_.paragraphProposes[i]
+            );
+        }
+
+        storyIdToEndTime[storyId] = story_.endTime;
+        storyIdToPhase[storyId] = story_.phase;
+    }
+
     function storySymbol(
         uint256 storyId
     ) external view returns (string memory) {
@@ -304,8 +332,6 @@ contract ParallelStorySixProtocol is
     function currentProposes(
         uint256 storyId
     ) external view returns (uint256, string[] memory) {
-        require(storyIdToPhase[storyId] == Phase.Propose, "not propose phase");
-
         uint256 paragraphId = _currentParagraphSlot(storyId);
         return (paragraphId, storyIdToParagraphProposes[storyId][paragraphId]);
     }
@@ -330,4 +356,6 @@ contract ParallelStorySixProtocol is
             storyIdToPhaseLength[storyId];
         _createNewParagraphSlot(storyId);
     }
+
+    receive() external payable {}
 }

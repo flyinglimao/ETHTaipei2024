@@ -1,7 +1,7 @@
 import { Countdown } from "@/app/_components/Countdown";
 import { useMetadata } from "@/app/_hooks/useMetadata";
 import Link from "next/link";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import abi from "@/app/abi";
 
@@ -19,6 +19,12 @@ function FinishIso({ storyId }: { storyId: number }) {
       args: [BigInt(storyId), 86400n],
     });
   }, [storyId, writeContract]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      window.location.reload();
+    }
+  }, []);
 
   return (
     <section className="rounded-xl border p-6 flex flex-col gap-4">
